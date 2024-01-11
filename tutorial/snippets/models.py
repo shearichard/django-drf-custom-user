@@ -1,5 +1,9 @@
 import uuid
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from pygments.lexers import get_all_lexers
 from pygments.styles import get_all_styles
 from pygments.lexers import get_lexer_by_name
@@ -29,8 +33,25 @@ class Foo(models.Model):
 
 class Bar(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    django_user = models.OneToOneField(         
-        Foo,                                                                                       
+    django_user = models.OneToOneField(
+        User,
         null=False,
         on_delete=models.PROTECT)
     title = models.CharField(max_length=100, blank=True, default='')
+
+    class Meta:
+        verbose_name = "Bar"
+        verbose_name_plural = "Bars"
+
+    def __str__(self):
+        return str(self.id)
+    #
+@receiver(post_save, sender=User)
+def create_user_bar(sender, instance, created, **kwargs):
+    if created:
+        Bar.objects.create(django_user=instance)
+#
+@receiver(post_save, sender=User)
+def save_user_bar(sender, instance, **kwargs):
+    instance.bar.save()
+
