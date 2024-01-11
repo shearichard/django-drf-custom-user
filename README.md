@@ -1,5 +1,5 @@
 # Django DRF Custom User
-This project is used to trial the use of customer Django Users in the context of Django Rest Framework.
+This project is used to trial the use of custom Django Users in the context of Django Rest Framework.
 
 ## Example Transactions
 ### Before any authorisation applied
