@@ -31,6 +31,10 @@ class Foo(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100, blank=True, default='')
 
+class BarOwner(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=100, blank=True, default='')
+
 class Bar(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     django_user = models.OneToOneField(
@@ -38,6 +42,8 @@ class Bar(models.Model):
         null=False,
         on_delete=models.PROTECT)
     title = models.CharField(max_length=100, blank=True, default='')
+    #ownerorganisation = models.ForeignKey(  BarOwner, on_delete=models.CASCADE)
+
 
     class Meta:
         verbose_name = "Bar"
