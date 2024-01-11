@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from pygments.lexers import get_all_lexers
 from pygments.styles import get_all_styles
@@ -21,3 +22,15 @@ class Snippet(models.Model):
 
     class Meta:
         ordering = ['created']
+
+class Foo(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=100, blank=True, default='')
+
+class Bar(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    django_user = models.OneToOneField(         
+        Foo,                                                                                       
+        null=False,
+        on_delete=models.PROTECT)
+    title = models.CharField(max_length=100, blank=True, default='')
