@@ -42,7 +42,7 @@ class Bar(models.Model):
         null=False,
         on_delete=models.PROTECT)
     title = models.CharField(max_length=100, blank=True, default='')
-    #ownerorganisation = models.ForeignKey(  BarOwner, on_delete=models.CASCADE)
+    barowner = models.ForeignKey(  BarOwner, on_delete=models.CASCADE)
 
 
     class Meta:
