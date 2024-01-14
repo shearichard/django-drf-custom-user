@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from tutorial import settings
 from pygments.lexers import get_all_lexers
 from pygments.styles import get_all_styles
 from pygments.lexers import get_lexer_by_name
@@ -38,7 +39,7 @@ class BarOwner(models.Model):
 class Bar(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     django_user = models.OneToOneField(
-        User,
+        settings.AUTH_USER_MODEL,
         null=False,
         on_delete=models.PROTECT)
     title = models.CharField(max_length=100, blank=True, default='')
